@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./src:/notes/server
+      - ./nodemon.json:/notes/server/nodemon.json
+    container_name: 'node-server'
+    expose:
+      - 5000
+    ports:
+      - 5000:5000
+    command: npm run dev
+  mongodb_container:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: notes
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+volumes:
+  mongodb_data_container:

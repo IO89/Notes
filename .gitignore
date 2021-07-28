@@ -1,5 +1,6 @@
 #Node modules
 /app/node_modules
 /server/node_modules
+/server/dist
 #Idea files
 /.idea

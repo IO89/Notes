@@ -1,0 +1,132 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* App container */
+.container {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 10px;
+  padding-left: 10px;
+  min-height: 100vh;
+}
+
+/* Note component*/
+.note {
+  background-color: #61dafb;
+  border-radius: 10px;
+  padding: 1rem;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  white-space: pre-wrap;
+}
+.note-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notes-list {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+}
+
+.note.new {
+  background-color: blanchedalmond;
+}
+
+textarea {
+  border:none;
+  resize: none;
+  background-color: blanchedalmond;
+}
+
+textarea:focus{
+  outline: none;
+}
+
+/*Save/edit/delete buttons*/
+.button-container {
+  display: flex;
+}
+
+.save{
+  background-color: #61dafb;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 10px 5px 10px;
+
+}
+
+.save:hover{
+  background-color: darkturquoise;
+  cursor: pointer;
+}
+
+.delete {
+  border: none;
+  border-radius: 15px;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+}
+.edit {
+  border: none;
+  border-radius: 15px;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+}
+
+/*Dark mode*/
+.dark-mode {
+  background-color: black;
+}
+
+.dark-mode h1{
+  color: white;
+}
+
+/*Header*/
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.switch {
+  background-color: lightgrey;
+  border: none;
+  border-radius: 15px;
+  padding: 5px 10px 5px 10px;
+}
+
+/*Search component*/
+.search {
+  display: flex;
+  background-color: lightgrey;
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+}
+
+.search input {
+  border: none;
+  background-color: lightgrey;
+}
+
+.search input:focus {
+  outline: none;
+}
