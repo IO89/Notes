@@ -1,15 +1,10 @@
 {
-  "defaultSeverity": "error",
-  "jsRules": {},
-  "rules": {
-    "no-console": false
-  },
-  "rulesDirectory": [],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
     "target": "es6",
     "module": "commonjs",
-    "rootDir": "./",
+    "rootDir": "./src",
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true
