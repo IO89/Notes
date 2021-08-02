@@ -8,9 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+     working-directory: './client'
     steps:
-        working-directory: './client'
       - uses: actions/checkout@v2
+      
       - name: Setup Node.js environment
         uses: actions/setup-node@v1
         with:
