@@ -9,14 +9,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-        working-directory: './client'
       - uses: actions/checkout@v2
+      
       - name: Setup Node.js environment
         uses: actions/setup-node@v1
         with:
           node-version: '15'
       - name: Install deps
+        working-directory: './client'
         run: yarn
 
       - name: Run tests
+        working-directory: './client'
         run: yarn run test
