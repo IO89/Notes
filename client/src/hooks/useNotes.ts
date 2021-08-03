@@ -4,14 +4,19 @@ import { v4 as uuidv4 } from "uuid";
 import io, { Socket } from "socket.io-client";
 
 export const useNotes = ()=>{
+
   const [notes, setNotes] = useState<Notes>([
-    { id: 'test-id', text: "Note-1", date: "29/07/2021" },
+    { id: 'test-id', text: "Note-1", date: "29/07/2021", order:0 },
     {
       id: uuidv4(),
       text: "Note-2",
       date: "29/07/2021",
+      order:1
     },
   ]);
+  console.log('show me what you got',notes)
+  const [notesOrder,setNotesOrder] = useState<number>(notes.length);
+  const incrementNotesOrder = ()=> setNotesOrder(notesOrder+1);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [currentNote, setCurrentNote] = useState<NoteData>();
 
@@ -36,12 +41,15 @@ export const useNotes = ()=>{
   },[notes]);
 
 
+
   const addNote = (text: string) => {
     const date = new Date();
+    incrementNotesOrder();
     const newNote = {
       id: uuidv4(),
       text: text,
       date: date.toLocaleDateString(),
+      order:notesOrder
     };
     const updatedNotes =[...notes, newNote];
     setNotes(updatedNotes);

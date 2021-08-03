@@ -1,8 +1,11 @@
 import { NoteData } from "../types";
+import React from "react";
 
 type NoteProps = NoteData & {
   handleDeleteNote: (id: string) => void;
   handleEditMode: (id: string) => void;
+  handleDrag: (e: React.DragEvent<HTMLDivElement>) =>void;
+  handleDrop: (e: React.DragEvent<HTMLDivElement>) => void;
 };
 
 export const Note = ({
@@ -11,9 +14,11 @@ export const Note = ({
   date,
   handleDeleteNote,
   handleEditMode,
+                       handleDrag,
+                       handleDrop
 }: NoteProps) => {
   return (
-    <div className="note">
+    <div draggable={true} id={id} onDragOver={event => event.preventDefault()} onDragStart={handleDrag} onDrop={handleDrop} className="note">
       <span title="note-text">{text}</span>
       <div className="note-footer">
         <small title={"note-date"}>{date}</small>

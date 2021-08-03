@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { io, Socket } from "socket.io-client";
+import React, { useEffect, useState } from "react";
 
 import { NoteList } from "./components/NoteList";
 import { Search } from "./components/Search";
@@ -10,6 +9,31 @@ import { useNotes } from "./hooks/useNotes";
 function App() {
   const [searchText, setSearchText] = useState<string>("");
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [dragId, setDragId] = useState<string>();
+
+  const handleDrag = (e:React.DragEvent<HTMLDivElement>)=>{
+    setDragId(e.currentTarget.id);
+  };
+
+  const handleDrop = (e:React.DragEvent<HTMLDivElement>) => {
+    const dragNote = notes.find((note) => note.id === dragId);
+    const dropNote = notes.find((note) => note.id === e.currentTarget.id);
+
+    const dragNoteOrder = dragNote?.order;
+    const dropNoteOrder = dropNote?.order;
+
+    const newNoteState = notes.map((note) => {
+      if (dropNoteOrder && note.id === dragId) {
+        note.order = dropNoteOrder;
+      }
+      if (dragNoteOrder && note.id === e.currentTarget.id) {
+        note.order = dragNoteOrder;
+      }
+      return note;
+    });
+    setNotes(newNoteState);
+  };
+
   const {
     notes,
     setNotes,
@@ -58,6 +82,8 @@ function App() {
               handleAddNote={addNote}
               handleDeleteNote={deleteNote}
               handleEditMode={switchEditMode}
+              handleDrag={handleDrag}
+              handleDrop={handleDrop}
             />
           </>
         )}
