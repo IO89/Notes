@@ -5,9 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile
       target: base
-    volumes:
-      - ./src:/notes/server
-      - ./nodemon.json:/notes/server/nodemon.json
     container_name: 'node-server'
     expose:
       - 5000

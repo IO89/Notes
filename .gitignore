@@ -1,6 +1,7 @@
-#Node modules
+# Node modules
 /app/node_modules
 /server/node_modules
+# Dist
 /server/dist
-#Idea files
+# Idea files
 /.idea
