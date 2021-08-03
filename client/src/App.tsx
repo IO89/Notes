@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
 import { NoteList } from "./components/NoteList";
@@ -37,36 +37,6 @@ function App() {
     localStorage.setItem("notes-app-data", JSON.stringify(notes));
   }, [notes]);
 
-  /* Connect and disconnect to web socket server*/
-  const [socket,setSocket]=useState<Socket>();
-
-  useEffect(()=>{
-   const s = io("http://localhost:5000");
-   setSocket(s)
-
-   return () =>{
-     s.disconnect();
-   }
-  },[]);
-
-  useEffect(()=>{
-    if(!socket) return;
-
-    socket.emit('send-notes',JSON.stringify(notes))
-
-  },[notes])
-
-  useEffect(()=>{
-    if(!socket) return;
-
-    socket.on('received-notes',notes=>{
-      setNotes(JSON.parse(notes))
-    })
-    // return()=>{
-    //   socket.off('receive-changes',notes)
-    // }
-
-  },[])
 
   return (
     <div className={`${darkMode && "dark-mode"}`}>
