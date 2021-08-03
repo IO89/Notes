@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
-import { v4 as uuidv4 } from "uuid";
 import { NoteList } from "./components/NoteList";
 import { Search } from "./components/Search";
 import { Header } from "./components/Header";
 import { EditNote } from "./components/EditNote";
 import { useNotes } from "./hooks/useNotes";
-
-// const URL = 'ws://0.0.0.0:5000';
-
-// const socket = io('http://0.0.0.0:5000')
 
 function App() {
   const [searchText, setSearchText] = useState<string>("");
@@ -42,30 +37,36 @@ function App() {
     localStorage.setItem("notes-app-data", JSON.stringify(notes));
   }, [notes]);
 
-  // const [ws, setWs] = useState(new WebSocket(URL));
+  /* Connect and disconnect to web socket server*/
+  const [socket,setSocket]=useState<Socket>();
 
-  // useEffect(() => {
-  //     ws.onopen = () => {
-  //         console.log('connected to server');
-  //     }
-  //
-  //     ws.onmessage = (e) => {
-  //         const note = JSON.parse(e.data);
-  //         setNotes([...notes,note]);
-  //     }
-  //
-  //     return () => {
-  //         ws.onclose = () => {
-  //             console.log('WebSocket Disconnected');
-  //             setWs(new WebSocket(URL));
-  //         }
-  //     }
-  // }, [ws.onmessage, ws.onopen, ws.onclose, notes]);
-  //
-  // const submitNote = (usr: string, msg: string) => {
-  //     ws.send(JSON.stringify(note));
-  //     setNotes([...notes,msg]);
-  // }
+  useEffect(()=>{
+   const s = io("http://localhost:5000");
+   setSocket(s)
+
+   return () =>{
+     s.disconnect();
+   }
+  },[]);
+
+  useEffect(()=>{
+    if(!socket) return;
+
+    socket.emit('send-notes',JSON.stringify(notes))
+
+  },[notes])
+
+  useEffect(()=>{
+    if(!socket) return;
+
+    socket.on('received-notes',notes=>{
+      setNotes(JSON.parse(notes))
+    })
+    // return()=>{
+    //   socket.off('receive-changes',notes)
+    // }
+
+  },[])
 
   return (
     <div className={`${darkMode && "dark-mode"}`}>
