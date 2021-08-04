@@ -21,7 +21,6 @@ export const NoteList = ({
    handleDrop
 
 }: NoteListProps) => {
-  console.log('sortedd?', notes.sort((a, b) => a.order - b.order));
   return (
     <div className="notes-list">
       {notes

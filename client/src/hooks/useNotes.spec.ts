@@ -1,4 +1,3 @@
-import React from "react";
 import { useNotes } from "./useNotes";
 import { act, cleanup, renderHook } from "@testing-library/react-hooks";
 

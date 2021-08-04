@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NoteData, Notes } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import io, { Socket } from "socket.io-client";
+import { useDragAndDrop } from "./useDragAndDrop";
+import { useSocket } from "./useSocket";
 
 export const useNotes = ()=>{
 
@@ -14,33 +16,11 @@ export const useNotes = ()=>{
       order:1
     },
   ]);
-  console.log('show me what you got',notes)
-  const [notesOrder,setNotesOrder] = useState<number>(notes.length);
-  const incrementNotesOrder = ()=> setNotesOrder(notesOrder+1);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [currentNote, setCurrentNote] = useState<NoteData>();
 
-  /* Connect and disconnect to web socket server*/
-  const socket = useRef<null|Socket>(null);
-
-  useEffect(()=>{
-    socket.current = io('localhost:5000');
-
-    return () => {
-      socket.current?.disconnect();
-    }
-  },[]);
-
-  useEffect(()=>{
-    if (!socket.current) return;
-
-    socket.current?.on('received-notes',data =>{
-      const receivedNotes = JSON.parse(data);
-      setNotes(receivedNotes);
-    })
-  },[notes]);
-
-
+  const {socket} = useSocket(notes,setNotes);
+  const {notesOrder,incrementNotesOrder,handleDrop,handleDrag} = useDragAndDrop(notes,setNotes,socket)
 
   const addNote = (text: string) => {
     const date = new Date();
@@ -82,5 +62,5 @@ export const useNotes = ()=>{
   };
 
 
-  return {notes,setNotes,addNote,deleteNote,editNote,switchEditMode,isEditing,setIsEditing,currentNote}
+  return {notes,setNotes,addNote,deleteNote,editNote,switchEditMode,isEditing,setIsEditing,currentNote,handleDrag,handleDrop}
 }
