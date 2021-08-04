@@ -9,8 +9,6 @@ import { useNotes } from "./hooks/useNotes";
 function App() {
   const [searchText, setSearchText] = useState<string>("");
   const [darkMode, setDarkMode] = useState<boolean>(false);
-
-
   const {
     notes,
     setNotes,

@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { NoteData, Notes } from "../types";
 import { v4 as uuidv4 } from "uuid";
-import io, { Socket } from "socket.io-client";
 import { useDragAndDrop } from "./useDragAndDrop";
 import { useSocket } from "./useSocket";
 
 export const useNotes = ()=>{
-
   const [notes, setNotes] = useState<Notes>([
     { id: 'test-id', text: "Note-1", date: "29/07/2021", order:0 },
     {
