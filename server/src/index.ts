@@ -32,10 +32,12 @@ const io = new Server(httpServer, {
 io.on('connection', async (socket: Socket) => {
   console.log(`connected: ${socket.id}`);
 
-  // const notes = await Note.find();
-  // socket.emit('server:send-all-notes', notes);
+  const notes = await Note.find();
+
+  socket.emit('server:send-all-notes', notes);
 
   socket.on('update-notes', (notes: Notes) => {
+    // TODO: save updated notes to DB
     socket.broadcast.emit('received-notes', notes);
   });
 

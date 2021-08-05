@@ -38,6 +38,7 @@ export const useNotes = () => {
   const deleteNote = (id: string) => {
     const newNotes = notes.filter((note) => note.id !== id);
     setNotes(newNotes);
+    // TODO: emit delete message with id
     socket.current?.emit('update-notes', JSON.stringify(newNotes));
   };
 
@@ -51,6 +52,7 @@ export const useNotes = () => {
     });
 
     setNotes(updatedNotes);
+    // TODO: send updated note
     socket.current?.emit('update-notes', JSON.stringify(updatedNotes));
   };
 
