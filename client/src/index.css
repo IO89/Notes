@@ -41,7 +41,7 @@ code {
 .notes-list {
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .note.new {
@@ -49,12 +49,12 @@ code {
 }
 
 textarea {
-  border:none;
+  border: none;
   resize: none;
   background-color: blanchedalmond;
 }
 
-textarea:focus{
+textarea:focus {
   outline: none;
 }
 
@@ -63,15 +63,14 @@ textarea:focus{
   display: flex;
 }
 
-.save{
+.save {
   background-color: #61dafb;
   border: none;
   border-radius: 15px;
   padding: 5px 10px 5px 10px;
-
 }
 
-.save:hover{
+.save:hover {
   background-color: darkturquoise;
   cursor: pointer;
 }
@@ -81,6 +80,7 @@ textarea:focus{
   border-radius: 15px;
   padding: 5px 10px 5px 10px;
   cursor: pointer;
+  margin-right: 5px;
 }
 .edit {
   border: none;
@@ -94,12 +94,12 @@ textarea:focus{
   background-color: black;
 }
 
-.dark-mode h1{
+.dark-mode h1 {
   color: white;
 }
 
 /*Header*/
-.header{
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
