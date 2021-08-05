@@ -42,3 +42,11 @@ After we have our DB up and running we can start server in watch mode:
 ```shell
 yarn run dev
 ```
+
+## Future improvements
+
+- Remove notes from db.
+- Save multiple notes to db.
+- Add tests that would interact with db.
+- Use id that comes from note as id for saving or opposite use db id to use it in note.
+- Place server container in docker-compose file.
