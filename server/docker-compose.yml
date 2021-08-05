@@ -1,16 +1,5 @@
 version: '3.7'
 services:
-  server:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: base
-    container_name: 'node-server'
-    expose:
-      - 5000
-    ports:
-      - 5000:5000
-    command: npm run dev
   mongodb_container:
     image: mongo:latest
     environment:

@@ -34,7 +34,7 @@ To run server in watch mode(from server's folder):
 yarn  run dev
 ```
 
-To run server in a container(from server's folder):
+To run db in a container(from server's folder):
 
 ```shell
 docker-compose up -d

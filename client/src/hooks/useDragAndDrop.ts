@@ -1,18 +1,24 @@
-import { NoteData, Notes } from "../types";
-import React, { MutableRefObject, useState } from "react";
-import { Socket } from "socket.io-client";
+import { NoteData, Notes } from '../types';
+import React, { MutableRefObject, useState } from 'react';
+import { Socket } from 'socket.io-client';
 
-export const useDragAndDrop = (notes:Notes,setNotes: (value: (((prevState: NoteData[]) => NoteData[]) | NoteData[])) => void,socket:  MutableRefObject<Socket | null>)=>{
-  const [notesOrder,setNotesOrder] = useState<number>(notes.length);
+export const useDragAndDrop = (
+  notes: Notes,
+  setNotes: (
+    value: ((prevState: NoteData[]) => NoteData[]) | NoteData[]
+  ) => void,
+  socket: MutableRefObject<Socket | null>
+) => {
+  const [notesOrder, setNotesOrder] = useState<number>(notes.length);
   const [dragId, setDragId] = useState<string>();
 
-  const incrementNotesOrder = ()=> setNotesOrder(notesOrder+1);
+  const incrementNotesOrder = () => setNotesOrder(notesOrder + 1);
 
-  const handleDrag = (e:React.DragEvent<HTMLDivElement>)=>{
+  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
     setDragId(e.currentTarget.id);
   };
 
-  const handleDrop = (e:React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     const dragNote = notes.find((note) => note.id === dragId);
     const dropNote = notes.find((note) => note.id === e.currentTarget.id);
 
@@ -29,8 +35,16 @@ export const useDragAndDrop = (notes:Notes,setNotes: (value: (((prevState: NoteD
       return note;
     });
     setNotes(newNoteState);
-    socket.current?.emit('send-notes', JSON.stringify(newNoteState))
+    socket.current?.emit('update-notes', JSON.stringify(newNoteState));
   };
 
-  return {notesOrder,setNotesOrder,dragId,setDragId,incrementNotesOrder,handleDrag,handleDrop}
-}
+  return {
+    notesOrder,
+    setNotesOrder,
+    dragId,
+    setDragId,
+    incrementNotesOrder,
+    handleDrag,
+    handleDrop
+  };
+};

@@ -29,3 +29,4 @@ yarn run test
 
 - Refactor `index.css` file to smaller `<component-name>.module.css` files and place them next to components
 - Update tests for custom hook `useDragAndDrop.ts`
+- Validate whether notes should have author field
