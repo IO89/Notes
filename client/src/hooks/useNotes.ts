@@ -1,24 +1,25 @@
-import { useState } from "react";
-import { NoteData, Notes } from "../types";
-import { v4 as uuidv4 } from "uuid";
-import { useDragAndDrop } from "./useDragAndDrop";
-import { useSocket } from "./useSocket";
+import { useState } from 'react';
+import { NoteData, Notes } from '../types';
+import { v4 as uuidv4 } from 'uuid';
+import { useDragAndDrop } from './useDragAndDrop';
+import { useSocket } from './useSocket';
 
-export const useNotes = ()=>{
+export const useNotes = () => {
   const [notes, setNotes] = useState<Notes>([
-    { id: 'test-id', text: "Note-1", date: "29/07/2021", order:0 },
+    { id: 'test-id', text: 'Note-1', date: '29/07/2021', order: 0 },
     {
       id: uuidv4(),
-      text: "Note-2",
-      date: "29/07/2021",
-      order:1
-    },
+      text: 'Note-2',
+      date: '29/07/2021',
+      order: 1
+    }
   ]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [currentNote, setCurrentNote] = useState<NoteData>();
 
-  const {socket} = useSocket(notes,setNotes);
-  const {notesOrder,incrementNotesOrder,handleDrop,handleDrag} = useDragAndDrop(notes,setNotes,socket)
+  const { socket } = useSocket(notes, setNotes);
+  const { notesOrder, incrementNotesOrder, handleDrop, handleDrag } =
+    useDragAndDrop(notes, setNotes, socket);
 
   const addNote = (text: string) => {
     const date = new Date();
@@ -27,17 +28,17 @@ export const useNotes = ()=>{
       id: uuidv4(),
       text: text,
       date: date.toLocaleDateString(),
-      order:notesOrder
+      order: notesOrder
     };
-    const updatedNotes =[...notes, newNote];
+    const updatedNotes = [...notes, newNote];
     setNotes(updatedNotes);
-    socket.current?.emit('send-notes',JSON.stringify(updatedNotes));
+    socket.current?.emit('send-note', JSON.stringify(newNote));
   };
 
   const deleteNote = (id: string) => {
     const newNotes = notes.filter((note) => note.id !== id);
     setNotes(newNotes);
-    socket.current?.emit('send-notes',JSON.stringify(newNotes));
+    socket.current?.emit('client:update-notes', JSON.stringify(newNotes));
   };
 
   const editNote = (id: string, updatedText: string) => {
@@ -50,7 +51,7 @@ export const useNotes = ()=>{
     });
 
     setNotes(updatedNotes);
-    socket.current?.emit('send-notes',JSON.stringify(updatedNotes))
+    socket.current?.emit('client:update-notes', JSON.stringify(updatedNotes));
   };
 
   const switchEditMode = (id: string) => {
@@ -59,6 +60,17 @@ export const useNotes = ()=>{
     setCurrentNote(noteToEdit);
   };
 
-
-  return {notes,setNotes,addNote,deleteNote,editNote,switchEditMode,isEditing,setIsEditing,currentNote,handleDrag,handleDrop}
-}
+  return {
+    notes,
+    setNotes,
+    addNote,
+    deleteNote,
+    editNote,
+    switchEditMode,
+    isEditing,
+    setIsEditing,
+    currentNote,
+    handleDrag,
+    handleDrop
+  };
+};
