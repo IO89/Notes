@@ -14,7 +14,7 @@ yarn
 To run app in development mode:
 
 ```shell
-yarn run dev
+yarn run start
 ```
 
 ## How to test
