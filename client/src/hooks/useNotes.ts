@@ -38,7 +38,7 @@ export const useNotes = () => {
   const deleteNote = (id: string) => {
     const newNotes = notes.filter((note) => note.id !== id);
     setNotes(newNotes);
-    socket.current?.emit('client:update-notes', JSON.stringify(newNotes));
+    socket.current?.emit('update-notes', JSON.stringify(newNotes));
   };
 
   const editNote = (id: string, updatedText: string) => {
@@ -51,7 +51,7 @@ export const useNotes = () => {
     });
 
     setNotes(updatedNotes);
-    socket.current?.emit('client:update-notes', JSON.stringify(updatedNotes));
+    socket.current?.emit('update-notes', JSON.stringify(updatedNotes));
   };
 
   const switchEditMode = (id: string) => {

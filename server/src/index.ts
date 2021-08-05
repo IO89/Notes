@@ -32,19 +32,17 @@ const io = new Server(httpServer, {
 io.on('connection', async (socket: Socket) => {
   console.log(`connected: ${socket.id}`);
 
-  const notes = await Note.find();
-  socket.emit('server:send-all-notes', notes);
+  // const notes = await Note.find();
+  // socket.emit('server:send-all-notes', notes);
 
-  socket.on('client:update-notes', (notes: Notes) => {
+  socket.on('update-notes', (notes: Notes) => {
     socket.broadcast.emit('received-notes', notes);
   });
 
-  socket.on('client:send-note', async (data) => {
-    console.log('type of data', typeof data);
-    console.log('data', data);
-    const note = new Note({ data });
+  socket.on('send-note', async (data) => {
+    const note = new Note(JSON.parse(data));
     await note.save();
-    socket.broadcast.emit('server:new-note', note);
+    socket.broadcast.emit('new-note', note);
   });
 
   socket.on('disconnect', () => {
