@@ -19,7 +19,7 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.14.5",
     "@types/http-server": "^0.12.1",
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^27.0.3",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^16.4.1",
     "@types/socket.io": "^3.0.2",
